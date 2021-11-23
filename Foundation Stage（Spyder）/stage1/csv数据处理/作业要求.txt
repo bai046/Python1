@@ -1,0 +1,11 @@
+1、分别取出csv文件中的Pickup_longitude、Pickup_latitude、Dropoff_longitude、Dropoff_latitude、Passenger_count、Fare_amount列，且分别将其命名为：上车经度、上车纬度、下车经度、下车纬度、乘客人数，费用
+
+=============================例如：=====================================
+Pickup_longitude、Pickup_latitude、Dropoff_longitude、Dropoff_latitude、Passenger_count、Fare_amount
+         上车经度、            上车纬度、             下车经度、               下车纬度、              乘客人数，            费用
+======================================================================
+
+
+2、删除数据为0或者为空的数据（去找删除数据的api）
+3、取出Pickup_longitude（>-73.89）、Pickup_latitude(<40.8)、Dropoff_longitude(>-73.9)、Dropoff_latitude(<40.8)的数据
+4、将两个文件最终的数据最终合并在一个文件里.
