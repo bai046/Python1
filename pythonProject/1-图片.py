@@ -20,6 +20,7 @@ for i in range(0, 2):
     content_all = soup.find_all(class_="pic")
     for content in content_all:
         imgContent = content.find(name="img")
+
         imgName = imgContent.attrs["alt"]
         imgUrl = imgContent.attrs["src"]
         imgUrlHd = imgUrl.replace("s_ratio_poster", "m")

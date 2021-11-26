@@ -13,6 +13,7 @@ import urllib.request, urllib.error
 import xlwt
 # 进行数据可视化分析
 import matplotlib.pyplot as plt
+# 读取Excel数据
 import pandas as pd
 
 # 进行SQLLite数据库操作。用于将爬到数据写入数据库
@@ -51,7 +52,6 @@ findRating = re.compile(r'<span class="rating_num" property="v:average">(.*)</sp
 findJudge = re.compile(r'<span>(\d*)人评价</span>')  # 评价人数
 findInq = re.compile(r'<span class="inq">(.*)</span>')  # 一句话概述
 findBd = re.compile(r'<p class="">(.*?)</p>', re.S)  # 相关内容
-
 
 # 1，爬取网页
 def getData(baseurl):
