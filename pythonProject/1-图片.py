@@ -19,6 +19,7 @@ for i in range(0, 2):
     soup = BeautifulSoup(html, "lxml")
     content_all = soup.find_all(class_="pic")
     for content in content_all:
+
         imgContent = content.find(name="img")
 
         imgName = imgContent.attrs["alt"]
