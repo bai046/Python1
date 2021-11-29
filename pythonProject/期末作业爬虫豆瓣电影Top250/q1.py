@@ -15,43 +15,27 @@ import xlwt
 import matplotlib.pyplot as plt
 # 读取Excel数据
 import pandas as pd
-
-# 进行SQLLite数据库操作。用于将爬到数据写入数据库
-# import sqlite3
+import time
 
 def main():
     baseurl = "https://movie.douban.com/top250?start="
     # 1，爬取网页+2,逐一解析数据
     datalist = getData(baseurl)
-    savepath = "./豆瓣电影Top250.xls"
+    path = "./豆瓣电影Top250.xls"
     # 3,保存数据
-    SaveData(datalist, savepath)
-    # 4,可视化数据分析
-    df = pd.read_excel(savepath, usecols=["评分"])
-    df_li = df.values.tolist()
-    names = []
-    rates = []
-    i = 1
-    for s_li in df_li:
-        names.append(i)
-        i += 1
-        rates.append(s_li[0])
-    print(names)
-    print(rates)
-
-    plt.scatter(names, rates)  # 统计图
-    plt.show()
-
+    Save(datalist, path)
+    time.sleep(3)
+    # 4，数据可视化
+    ShowDatas(path)
 
 # 全局变量：创建正则表达式对象，表示规则（字符串的模式）
-findLink = re.compile(r'<a href="(.*?)">')  # 影片详情链接规则
-# re.S让换行符包含在字符中:忽略换行符影响
-findImgSrc = re.compile(r'<img.*src="(.*?)"', re.S)  # 电影封面图片链接规则
+findEm = re.compile(r'<em class="">(\d*)</em>')  # 排名
 findTitle = re.compile(r'<span class="title">(.*)</span>')  # 片名
 findRating = re.compile(r'<span class="rating_num" property="v:average">(.*)</span>')  # 评分
 findJudge = re.compile(r'<span>(\d*)人评价</span>')  # 评价人数
 findInq = re.compile(r'<span class="inq">(.*)</span>')  # 一句话概述
 findBd = re.compile(r'<p class="">(.*?)</p>', re.S)  # 相关内容
+# re.S让换行符包含在字符中:忽略换行符影响
 
 # 1，爬取网页
 def getData(baseurl):
@@ -65,25 +49,22 @@ def getData(baseurl):
     # 2,逐一解析数据
     soup = BeautifulSoup(html, "html.parser")
     for item in soup.find_all('div', class_="item"):
-        print(item)#电影全部信息
+        #print(item) # 电影全部信息
         data = []  # 保存一部电影全部信息
         item = str(item)
 
-        link = re.findall(findLink, item)[0]  # 影片详情链接
-        data.append(link)  # 添加链接
-
-        imgSrc = re.findall(findImgSrc, item)[0]
-        data.append(imgSrc)  # 添加图片
+        em = re.findall(findEm,item)[0]
+        data.append(em)
 
         titles = re.findall(findTitle, item)
         if (len(titles) == 2):
-            ctitle = titles[0]
-            data.append(ctitle)  # 添加中文名
-            otitle = titles[1].replace("/", "")
-            data.append(otitle)  # 添加英文文名
+            btitle = titles[0]
+            data.append(btitle)  # 添加中文名
+            otitle = titles[1].replace("/", " ")
+            data.append(otitle)  # 添加其他片名
         else:
-            data.append(titles[0])
-            data.append(' ')  # 存入Excel或数据库要留（英文名字）空
+            data.append(btitle)
+            data.append(btitle)  # 存入Excel或数据库要留（其他名字）空
 
         rating = re.findall(findRating, item)[0]
         data.append(rating)  # 添加平均分
@@ -100,12 +81,32 @@ def getData(baseurl):
 
         bd = re.findall(findBd, item)[0]
         bd = re.sub(r'<br(\s+)?/>(\s+)?', " ", str(bd))  # 去掉<br/>
-        bd = re.sub('/', " ", bd)  # 替换/为空
-        data.append(bd.strip())  # 添加内容,去掉前后空格
+        #bd = re.sub('/', " ", bd)  # 替换/为空
+        bds = bd.strip()  # 内容,去掉前后空格
+        print(bds)
+
+        director = re.compile(r'导演: (.*)主演:').findall(bds)
+        #print(director)
+        data.append(director)  # 添加导演
+
+        actor = re.compile(r'主演: (.*) \d').findall(bds)
+        data.append(actor)  # 添加主要演员
+
+        y = re.compile(r'-?\d+\.?\d*').findall(bds)
+        data.append(y)  # 添加年份
+
+        country = bds.split('/')[-2]
+        #print(country)
+        data.append(country)  # 添加国家
+
+        typ = bds.split('/')[-1]
+        #print(typ)
+        data.append(typ)  # 添加类型
 
         # 处理好的一部电影信息放图datalist
         datalist.append(data)
-    print(datalist)  # 打印所以电影提取的信息
+
+    #print(datalist)  # 打印所以电影提取的信息
     return datalist
 
 
@@ -122,7 +123,7 @@ def askURL(url):
     try:
         response = urllib.request.urlopen(request)
         html = response.read().decode("utf-8")  # 对中文进行解码
-        # print(html)
+        print(html)
     except urllib.error.URLError as e:
         if hasattr(e, "code"):
             print(e.code)
@@ -134,24 +135,69 @@ def askURL(url):
 
 
 # 3,保存数据
-def SaveData(datalist, savepath):
+def Save(datalist, path):
     # 类似创建一个Excel文件
     excel = xlwt.Workbook(encoding="utf-8")
     # 类似Excel文件中的sheet1，创建工作表
     sheet1 = excel.add_sheet('豆瓣电影Top250')
-    col = ("电影详情链接", "封面链接", "中文名", "英文名", "评分", "评价人数", "概述", "详细信息")
+    col = ("排名","中文名", "别名", "评分", "评价人数", "概述", "导演","主要演员","年份","国家","类型")
     # 写入(行,列,'内容')
-    for i in range(0, 8):
+    for i in range(0, 11):
         sheet1.write(0, i, col[i])  # 列名
     for i in range(0, 25):
-        print("第%d条" % (i + 1))
+        #print("第%d条" % (i + 1))
         data = datalist[i]
-        for j in range(0, 8):
+        for j in range(0, 11):
             sheet1.write(i + 1, j, data[j])  # 数据
 
     # 保存数据表('表名.xls')
-    excel.save(savepath)
+    excel.save(path)
 
+def ShowDatas(path):
+    # 1，准备数据
+    df = pd.read_excel(path, usecols=["排名", "评分", "年份"])
+    df_li = df.values.tolist()
+    ins = []
+    rates = []
+    c20 = 0
+    c21 = 0
+    y = []
+    for s_li in df_li:
+        ins.append(int(s_li[0]))
+        rates.append(s_li[1])
+        if s_li[2] >=2000:
+            c20+=1
+        else:
+            c21+=1
+        y.append(int(s_li[2]))
+    #print(ins)
+    #print(rates)
+    #print(c20)
+    #print(c21)
+    #print(y)
+
+    # 2.1，评分与评价人数
+    df = pd.DataFrame({"rates": rates,
+                       "years": y,
+                       "ins": ins
+                       })
+    ax = df.plot.bar("ins", "years",linewidth=5.0, color="yellow")
+    ax.set_ylim(1955, 2011)
+    df.plot("ins", "rates", secondary_y=True, ax=ax)
+
+    # 2.2，饼状图
+    # 添加图形对象
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
+    # 使得X/Y轴的间距相等
+    ax.axis('equal')
+    langs = ['20century', '21century']
+    count = [c20, c21]
+    # 绘制
+    ax.pie(count, labels=langs, autopct='%1.2f%%')
+
+    # 3，展示
+    plt.show()
 
 # 当程序执行时，程序入口
 if __name__ == '__main__':
