@@ -13,16 +13,16 @@ headers = {
 }
 response = requests.get(url, headers=headers)
 html = response.text
-new_html = html.lstrip("fetchJSON_comment98(").rstrip(");")
+new_html = html.lstrip("fetchJSON_comment98(").rstrip(");")  # lstrip删左边,rlstrp删右边，strip()删两边空格
 html = json.loads(new_html)  # 转换成json格式
-print(html['hotCommentTagStatistics'])
+print(html['hotCommentTagStatistics'])  # 拿去需要的数据
 # print(html['hotCommentTagStatistics'][0]['name'])
 database = html['hotCommentTagStatistics']
 datas = []
 for num in range(0,len(database)):
     i = database[num]['name']
     j = database[num]['count']
-    data = i+str(j)
+    data = i + " " + str(j)
     datas.append(data)
 print(datas)
 
