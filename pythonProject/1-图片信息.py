@@ -3,7 +3,7 @@
 # @Author : 瑛
 # @File : 1-.py
 # @Software : PyCharm
-#以年份-评论人数作为图片命名
+# 以年份-评论人数作为图片命名
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -22,19 +22,23 @@ for i in range(0, 10):
     #print(content_all)
     for content in content_all:
         imgContent = content.find('img')
-        #imgName = imgContent.attrs["alt"]
         imgUrl = imgContent.attrs["src"]
         imgUrlHd = imgUrl.replace("s_ratio_poster", "m")
         imgResponse = requests.get(imgUrlHd)
         img = imgResponse.content
         content = str(content)
+        # print(content)
         #找出所有数据
-        nameContent = re.compile(r"-?\d+\.?\d*").findall(content)
-        print(nameContent)
         #年份
-        ye = nameContent[6]
-        #评论人数
-        judgeNum = nameContent[10]
+        ye = re.compile(r'<p class="">(.*?)</p>', re.S).findall(content)
+        # 去掉干扰项
+        ye = re.sub(r"xa0", "", str(ye))
+        # 提取年份数字
+        cye = re.compile(r"-?\d+\.?\d*", re.S).findall(ye)
+        # print(cye)
+        # 提取评论人数
+        judgeNum = re.compile(r'<span>(\d*)人评价</span>').findall(content)
+        # print(judgeNum)
         # 3,保存数据
-        with open(r"./pic/{0}-{1}.jpg".format(ye,judgeNum), "wb") as f:
+        with open(r"./pic/{0}-{1}.jpg".format(cye[0],judgeNum[0]), "wb") as f:
             f.write(img)
