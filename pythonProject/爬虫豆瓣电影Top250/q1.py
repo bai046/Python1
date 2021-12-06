@@ -49,11 +49,11 @@ def getData(baseurl):
     # 2,逐一解析数据
     soup = BeautifulSoup(html, "html.parser")
     for item in soup.find_all('div', class_="item"):
-        #print(item) # 电影全部信息
+        # print(item)  # 电影全部信息
         data = []  # 保存一部电影全部信息
         item = str(item)
 
-        em = re.findall(findEm,item)[0]
+        em = re.findall(findEm, item)
         data.append(em)
 
         titles = re.findall(findTitle, item)
@@ -66,10 +66,10 @@ def getData(baseurl):
             data.append(btitle)
             data.append(btitle)  # 存入Excel或数据库要留（其他名字）空
 
-        rating = re.findall(findRating, item)[0]
+        rating = re.findall(findRating, item)
         data.append(rating)  # 添加平均分
 
-        judgeNum = re.findall(findJudge, item)[0]
+        judgeNum = re.findall(findJudge, item)
         data.append(judgeNum)  # 添加评价人数
 
         inq = re.findall(findInq, item)
@@ -79,7 +79,7 @@ def getData(baseurl):
         else:
             data.append(" ")  # 存入Excel或数据库要留空
 
-        bd = re.findall(findBd, item)[0]
+        bd = re.findall(findBd, item)
         bd = re.sub(r'<br(\s+)?/>(\s+)?', " ", str(bd))  # 去掉<br/>
         #bd = re.sub('/', " ", bd)  # 替换/为空
         bds = bd.strip()  # 内容,去掉前后空格

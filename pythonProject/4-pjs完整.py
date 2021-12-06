@@ -1,7 +1,7 @@
 # -*- coding = utf-8 -*-
 # @Time : 2021/12/111:26
 # @Author : 瑛
-# @File : 4-pjss.py
+# @File : 4-pjs完整.py
 # @Software : PyCharm
 # 使用import导入requests模块
 import requests
