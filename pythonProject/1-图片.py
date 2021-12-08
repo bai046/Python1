@@ -17,7 +17,7 @@ for i in range(0, 2):
 
     # 2,逐一解析数据
     soup = BeautifulSoup(html, "lxml")
-    content_all = soup.find_all(class_="pic")
+    content_all = soup.find_all(class_="pic")  # class与python关键字所以用class_代替
     for content in content_all:
 
         imgContent = content.find(name="img")

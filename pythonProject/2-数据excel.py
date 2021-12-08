@@ -69,7 +69,7 @@ def getData(baseurl):
         data = []  # 保存一部电影全部信息
         item = str(item)
 
-        link = re.findall(findLink, item)[0]  # 影片详情链接
+        link = re.findall(findLink, item)[0]  # 影片详情链接（[0]表示只要第一个）
         data.append(link)  # 添加链接
 
         imgSrc = re.findall(findImgSrc, item)[0]
