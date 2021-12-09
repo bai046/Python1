@@ -3,6 +3,7 @@
 # @Author : 瑛
 # @File : 4-pjs.py
 # @Software : PyCharm
+# 判断爬取数据为空：判断为写在js里
 import requests
 from bs4 import BeautifulSoup
 import json
