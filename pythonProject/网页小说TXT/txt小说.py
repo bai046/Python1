@@ -25,7 +25,7 @@ for i in range(18,68):
     # 提取规格文字
     txts = txt.replace('<div class="txt" id="txt">',title).replace('</div>','').replace('[','').replace(']','').replace('<br/>','\n')
     # print(txts)
-    with open('./书名.txt','a',encoding='utf-8') as f:
+    with open(r'./书名.txt','a',encoding='utf-8') as f:
         # f.write(title)
         f.write(txts)
 

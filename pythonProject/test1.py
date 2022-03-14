@@ -178,11 +178,10 @@ print("第二行")
 # b = re.compile(r"-?\d+\.?\d*", re.S).findall(a)
 # print(b)
 
-import re
 import requests
 from bs4 import BeautifulSoup
 
-url = "http://m.ttcwen.com/cw/1599372462/193318.html"
+url = "https://www.52shuku.vip/chongsheng/16190_2.html"
 # 直接爬取
 response = requests.get(url)
 # 乱码解析
@@ -191,13 +190,13 @@ html = response.text
 # print(html)
 # 解析数据
 soup = BeautifulSoup(html, "html.parser")
-title = soup.h1.string
-print(title)
-txt = str(soup.select('div#txt'))
-print(txt)
-print(type(txt))
-txts = txt.replace('<div class="txt" id="txt">','\r\n').replace('</div>','\r\n').replace('<br/>','\r\n')
-print(txts)
-# 整理数据
+# print(soup)
+article = soup.article.find_all("p")
+# print(soup.article.find("div"))
+# end = '<div class="pagination2">'
+print(str(article[0:-3]).replace('<p>','\r\n').replace('</p>,','').replace('</p>','').replace('[', '').replace(']', '\r\n'))
+# print(str(article[-3:-2]).split('<div')[0].replace('[<p>',''))
+a = str(article[-3:-2]).split('<div')[0].replace('[<p>','')
+print(a)
 
 
