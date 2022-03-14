@@ -3,57 +3,57 @@
 # @Author : 瑛
 # @File : 1.py
 # @Software : PyCharm
-import numpy as np
-import pandas as pd
-from matplotlib import pyplot as plt
-
-df = pd.read_excel("./91.xls", usecols=["工作经验", "学历要求"])
-df_li = df.values.tolist()
-jinyan1 = []
-xueli1 = []
-for s_li in df_li:
-    jinyan1.append(s_li[0])
-    xueli1.append(s_li[1])
-print(jinyan1)
-print(xueli1)
-jinyan2 = {}
-for item in jinyan1:
-    if item not in jinyan2:
-        jinyan2[item] = 1
-    else:
-        jinyan2[item] += 1
-print(jinyan2)
-
-xueli2 = {}
-for item in xueli1:
-    if item not in xueli2:
-        xueli2[item] = 1
-    else:
-        xueli2[item] += 1
-print(xueli2)
-print(xueli2.keys())
-print(xueli2.values())
-
-# 1柱状图
-# 创建x：经验  y:出现频率
-x = list(jinyan2.keys())
-y = list(jinyan2.values())
-plt.bar(x, y)
-# 显示x轴 y轴名称
-plt.ylabel("频率")
-plt.xlabel("经验")
-# 增加标题
-plt.title("经验统计分析")
-# 2饼状图
-# 添加图形对象
-plt.figure(figsize=(6,6))#将画布设定为正方形，则绘制的饼图是正圆
-label = list(xueli2.keys())
-values = list(xueli2.values())
-plt.pie(values,explode=[0.01,0.01,0.01],labels=label,autopct='%1.1f%%')#绘制饼图
-plt.title('性别要求饼图')#绘制标题
-# 解决中文乱码问题
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.show()
+# import numpy as np
+# import pandas as pd
+# from matplotlib import pyplot as plt
+#
+# df = pd.read_excel("./91.xls", usecols=["工作经验", "学历要求"])
+# df_li = df.values.tolist()
+# jinyan1 = []
+# xueli1 = []
+# for s_li in df_li:
+#     jinyan1.append(s_li[0])
+#     xueli1.append(s_li[1])
+# print(jinyan1)
+# print(xueli1)
+# jinyan2 = {}
+# for item in jinyan1:
+#     if item not in jinyan2:
+#         jinyan2[item] = 1
+#     else:
+#         jinyan2[item] += 1
+# print(jinyan2)
+#
+# xueli2 = {}
+# for item in xueli1:
+#     if item not in xueli2:
+#         xueli2[item] = 1
+#     else:
+#         xueli2[item] += 1
+# print(xueli2)
+# print(xueli2.keys())
+# print(xueli2.values())
+#
+# # 1柱状图
+# # 创建x：经验  y:出现频率
+# x = list(jinyan2.keys())
+# y = list(jinyan2.values())
+# plt.bar(x, y)
+# # 显示x轴 y轴名称
+# plt.ylabel("频率")
+# plt.xlabel("经验")
+# # 增加标题
+# plt.title("经验统计分析")
+# # 2饼状图
+# # 添加图形对象
+# plt.figure(figsize=(6,6))#将画布设定为正方形，则绘制的饼图是正圆
+# label = list(xueli2.keys())
+# values = list(xueli2.values())
+# plt.pie(values,explode=[0.01,0.01,0.01],labels=label,autopct='%1.1f%%')#绘制饼图
+# plt.title('性别要求饼图')#绘制标题
+# # 解决中文乱码问题
+# plt.rcParams['font.sans-serif'] = ['SimHei']
+# plt.show()
 
 
 # import csv
@@ -177,3 +177,27 @@ print("第二行")
 # print(a)
 # b = re.compile(r"-?\d+\.?\d*", re.S).findall(a)
 # print(b)
+
+import re
+import requests
+from bs4 import BeautifulSoup
+
+url = "http://m.ttcwen.com/cw/1599372462/193318.html"
+# 直接爬取
+response = requests.get(url)
+# 乱码解析
+response.encoding = 'utf-8'
+html = response.text
+# print(html)
+# 解析数据
+soup = BeautifulSoup(html, "html.parser")
+title = soup.h1.string
+print(title)
+txt = str(soup.select('div#txt'))
+print(txt)
+print(type(txt))
+txts = txt.replace('<div class="txt" id="txt">','\r\n').replace('</div>','\r\n').replace('<br/>','\r\n')
+print(txts)
+# 整理数据
+
+
