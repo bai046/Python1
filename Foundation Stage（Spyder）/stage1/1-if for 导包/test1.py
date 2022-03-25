@@ -91,7 +91,7 @@ else:
    
 flag = 1
  
-while (flag): print ('欢迎访问菜鸟教程!')
+while (flag): print ('欢迎访问教程!')
  
 print ("Good bye!")
 
