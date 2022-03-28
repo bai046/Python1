@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+
 
 for i in range(5):
     print(i)
@@ -17,7 +17,7 @@ it = iter(list)    # 创建迭代器对象
 for x in it:
     print (x, end=" ")
     
-"""
+
 
 ###函数
 
