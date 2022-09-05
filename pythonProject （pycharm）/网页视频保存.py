@@ -7,7 +7,9 @@
 import requests
 
 # 获取视频网页URL
-url = "https://？？.mp4"
+# url = "https://？？.mp4"
+url = "https://crcdn.ydstatic.com/xuetang/202204/e9299edda4fe/bd_e9299edda4fe_20220408195715.mp4"
+# https://crcdn.ydstatic.com/xuetang/202204/e9299edda4fe/bd_e9299edda4fe_20220408195715.mp4
 # 视频为二进制文件，获取content
 mp4 = requests.get(url).content
 # 写入文件

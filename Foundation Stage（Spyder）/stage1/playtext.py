@@ -4,11 +4,8 @@ Created on Thu Oct 21 10:18:22 2021
 
 @author: 瑛
 """
-print("Hello")
-#==============================================================================
-# # 时间生成
-# import time
-# print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-# 
-#==============================================================================
+# 时间生成
+import time
+print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
 

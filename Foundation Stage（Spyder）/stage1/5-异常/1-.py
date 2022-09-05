@@ -6,7 +6,7 @@ Created on Thu Nov 18 15:51:53 2021
 """
 #捕获所有异常
 try:
-    print(num)
+    print(f)
 except Exception as result:
     print("产生错误")
     print(result)

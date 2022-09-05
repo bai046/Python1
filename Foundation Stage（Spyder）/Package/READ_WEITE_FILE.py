@@ -40,7 +40,7 @@ def Read_CSV_TOList(filePath,fileName):
         data.append(line)
     return data
 
-    """
+
 import os,sys                       #导入模块
 def add_prefix_files():             #定义函数名称
     mark = 'B190109-'                 #准备添加的前缀内容
@@ -54,7 +54,6 @@ def add_prefix_files():             #定义函数名称
 if __name__ == '__main__': 
         path = r'D:\Python\Foundation Stage\stage1\B190109'   #运行程序前，记得修改主文件夹路径！
         add_prefix_files()         #调用定义的函数，注意名称与定义的函数名一致
-"""
 
 import os
 #path--文件路径

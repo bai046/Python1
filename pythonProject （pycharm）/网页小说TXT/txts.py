@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 import os
 
 # 创建作者文件用于存储
-os.mkdir('./非天夜翔')
+os.mkdir('./孤君')
 
 # 第一层：进入作者小说列表，拿到全部小说页面链接
 for i in range(1,3):
@@ -55,7 +55,7 @@ for i in range(1,3):
         #     print(item.get_text())
 
         # 1.存储（创建书名TXT文件）
-        with open(r'./非天夜翔/{0}.txt'.format(name), 'w+',encoding='utf-8') as f:
+        with open(r'./孤君/{0}.txt'.format(name), 'w+',encoding='utf-8') as f:
             print(1)
 
         # 第三层：提取页链接——小说页面内容（大多数一致，一些不一致）
@@ -81,7 +81,7 @@ for i in range(1,3):
             b = str(articles[-3:-2]).split('<div')[0].replace('[<p>', '')
 
             # 2.存储（写入内容）
-            with open('./非天夜翔/{0}.txt'.format(name),'a',encoding='utf-8') as f:
+            with open('./孤君/{0}.txt'.format(name),'a',encoding='utf-8') as f:
                 f.write(a)
                 f.write(b)
                 print(2)

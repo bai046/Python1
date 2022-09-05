@@ -32,19 +32,19 @@ print('备份后的文件名字：',newname)
 import os
 path = r'D:\Python\Foundation Stage\stage1\classwork5\B190109'
 os.chdir(path)
-print(os.getcwd())
-old_names = os.listdir( path )  #取路径下的文件名，生成列表
+print(os.getcwd()) # 获取当前目录检验是否进入
+old_names = os.listdir( path ) # 取路径下的文件名，生成列表
 print(old_names)
 mark = 'B190109-'
 f = int(input("请输入操作（1-添加字符，2-删除字符）："))
-#遍历列表下的文件名
+# 遍历列表下的文件名
 for old_name in old_names:
     if f == 1:         
-        os.rename(os.path.join(path,old_name),os.path.join(path,mark+old_name))  #重命名文件
+        os.rename(os.path.join(path,old_name),os.path.join(path,mark+old_name))  # 重命名文件
         print(old_name,"New name is: ",mark+old_name)
     elif f == 2:
-        newName = old_name.replace(mark,"")#新文件名   
-        os.rename(os.path.join(path,old_name),os.path.join(path,newName))  #重命名文件
+        newName = old_name.replace(mark,"") # 新文件名
+        os.rename(os.path.join(path,old_name),os.path.join(path,newName))  # 重命名文件
         print(old_name,"New name is: ",newName)
     else:
         print("请输入正确操作（1-添加字符，2-删除字符）")  
