@@ -8,9 +8,9 @@ import requests
 from bs4 import BeautifulSoup
 
 
-for i in range(1594098,1594175):
+for i in range(2,21):
     time.sleep(2)  # 休眠1秒
-    url = "https://www.idanmei.cc/novel/61901/" + str(i) + ".html"
+    url = "https://www.52shuku.vip/chongsheng/3650_" + str(i) + ".html"
     # 直接爬取
     response = requests.get(url)
     # print(response)
@@ -24,7 +24,7 @@ for i in range(1594098,1594175):
     print(title)
     txt = str(title[0:]).replace('<p>','\r\n').replace('</p>','').replace('<div id="booktxt">', '').replace('</div>', '\r\n').replace('[', '').replace(']', '\r\n')
     print(txt)
-    with open(r'./不洁.txt', 'a', encoding='utf-8') as f:
+    with open(r'./重生_阿豆.txt', 'a', encoding='utf-8') as f:
         f.write(txt)
         print(1)
 
