@@ -178,25 +178,27 @@ print("第二行")
 # b = re.compile(r"-?\d+\.?\d*", re.S).findall(a)
 # print(b)
 
-import requests
-from bs4 import BeautifulSoup
+# import requests
+# from bs4 import BeautifulSoup
+#
+# url = "https://www.52shuku.vip/chongsheng/16190_2.html"
+# # 直接爬取
+# response = requests.get(url)
+# # 乱码解析
+# response.encoding = 'utf-8'
+# html = response.text
+# # print(html)
+# # 解析数据
+# soup = BeautifulSoup(html, "html.parser")
+# # print(soup)
+# article = soup.article.find_all("p")
+# # print(soup.article.find("div"))
+# # end = '<div class="pagination2">'
+# print(str(article[0:-3]).replace('<p>','\r\n').replace('</p>,','').replace('</p>','').replace('[', '').replace(']', '\r\n'))
+# # print(str(article[-3:-2]).split('<div')[0].replace('[<p>',''))
+# a = str(article[-3:-2]).split('<div')[0].replace('[<p>','')
+# print(a)
 
-url = "https://www.52shuku.vip/chongsheng/16190_2.html"
-# 直接爬取
-response = requests.get(url)
-# 乱码解析
-response.encoding = 'utf-8'
-html = response.text
-# print(html)
-# 解析数据
-soup = BeautifulSoup(html, "html.parser")
-# print(soup)
-article = soup.article.find_all("p")
-# print(soup.article.find("div"))
-# end = '<div class="pagination2">'
-print(str(article[0:-3]).replace('<p>','\r\n').replace('</p>,','').replace('</p>','').replace('[', '').replace(']', '\r\n'))
-# print(str(article[-3:-2]).split('<div')[0].replace('[<p>',''))
-a = str(article[-3:-2]).split('<div')[0].replace('[<p>','')
-print(a)
+
 
 

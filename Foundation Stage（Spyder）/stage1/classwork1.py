@@ -28,20 +28,32 @@ for i in range (1,6):
 4.若用户猜测的数字小于随机生成的数，打印"猜的数字小了"
 5.若用户猜测的数字等于随机生成的数，打印"恭喜，你猜对了！"，并退出循环。
 '''
+#
 import random
+#
 number = random.randint(1,10)
+#
 print("数字猜谜游戏!")
+#
 i = 1
+#
 for i in range(1,3):
+    #
     guess = int(input("请输入你猜的数字："))
- 
+    #
     if guess == number:
+        #
         print("恭喜，你猜对了！")
+        #
         break
+    #
     elif guess < number:
+        #
         print("猜的数字小了")
+    #
     elif guess > number:
-        print("猜的数字大了")     
+        #
+        print("猜的数字大了")
 
     
 #4、计算2/1 + 3/2 + 4/3 +…+(n+1)/n，写出算法的程序.
@@ -52,7 +64,15 @@ for i in range(1,n):
         print("{0}/{1}".format(i+1,i),end="+")
         sum=i+1/i
 print("={0}".format(sum))
-        
+
+# 第五章 实现m(n)=1/2+2/3+...+n/n+1 的计算
+def caculate(n):
+    sum = 0
+    for x in range(n, 0, -1):
+        sum = sum + x / (x + 1)
+    print("sum=", sum)
+caculate(99)
+# https://blog.csdn.net/qq_45193872/article/details/113663786
 
         
 #5、将1,2,3,4,5,6,7进行反转，反转结果为7,6,5,4,3,2,1
